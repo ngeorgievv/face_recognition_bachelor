@@ -1,0 +1,118 @@
+<!--<html>-->
+<!--<body>-->
+<!--    <h1>Live Webcam Stream</h1>-->
+<!--    <img src="{{ url_for('video_feed') }}" width="640" height="480">-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Webcam Stream</title>
+    <style>
+        /* Center the content */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        /* Fixed size for the stream window */
+        #stream {
+            width: 640px;
+            height: 480px;
+            margin-bottom: 20px;
+            border: 2px solid #000;
+            text-align: center;
+            line-height: 480px; /* Vertically center the text */
+            font-size: 24px;
+            color: #555;
+            background-color: #e0e0e0;
+        }
+
+        /* Center the buttons and make them look nice */
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            width: 200px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        /* Green color for Start button */
+        #startBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Red color for Stop button */
+        #stopBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Live Webcam Stream</h1>
+
+    <!-- The live webcam stream window -->
+    <div id="stream">Stream is running...</div>
+
+    <!-- Controls for start and stop -->
+    <div class="controls">
+        <button id="startBtn" class="button" onclick="startStream()">Start Stream</button>
+        <button id="stopBtn" class="button" onclick="stopStream()" disabled>Stop Stream</button>
+    </div>
+
+    <script>
+        // JavaScript to control the start/stop of the stream
+        let streamActive = false;
+
+        function startStream() {
+            streamActive = true;
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+
+            // Update the stream window to show the webcam feed
+            document.getElementById('stream').innerHTML = '<img src="{{ url_for("video_feed") }}" width="640" height="480">'; // Update the stream source
+        }
+
+        function stopStream() {
+            streamActive = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+
+            // Stop the stream and show the text "Stream is stopped"
+            document.getElementById('stream').innerHTML = 'Stream is stopped';
+        }
+    </script>
+
+</body>
+</html>
